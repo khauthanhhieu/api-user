@@ -30,6 +30,19 @@ class StudentService {
     }
   }
 
+  static async findOne(username, password) {
+    const db = await MongoClient.connect(url);
+    try {
+      const studentCollection = db.collection("students");
+      return await studentCollection.findOne({ username, password })
+    } catch (err) {
+      console(err)
+      return null
+    } finally {
+      db.close()
+    }
+  }
+
   async checkUsername() {
     const db = await MongoClient.connect(url);
     try {
@@ -83,26 +96,6 @@ class StudentService {
       })
     } finally {
       db.close()
-    }
-  }
-
-  static async findOne(username, password) {
-    try {
-      return new Promise((resolve, reject) => {
-        MongoClient.connect(url, function (err, db) {
-          if (err)
-            console.log(err)
-          db.collection('users').findOne({ username: username, password: password }, function (err, result) {
-            if (err)
-              console.log(err)
-            resolve(result);
-          })
-        });
-      })
-
-    }
-    catch (error) {
-      return null;
     }
   }
 
