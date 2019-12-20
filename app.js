@@ -13,7 +13,7 @@ var cookieParser = require('cookie-parser');
 app.use(cookieParser())
 
 // Router
-//const userRouter = require('./routes/user')
+const studentRouter = require('./routes/student');
 
 // user Router
 //app.use('/api/user', userRouter);
@@ -21,6 +21,8 @@ app.use(cookieParser())
 app.get('/', function (req, res) {
   res.send('Xin chào, đây là API người dùng')
 })
+
+app.use('/api/student', studentRouter);
 
 app.get('/api/me', function(req, res) {
   console.log("GET '/me'")
