@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 const passport = require('./passport')
 //const AuthService = require('./services/auth')
 
@@ -13,13 +13,15 @@ var cookieParser = require('cookie-parser');
 app.use(cookieParser())
 
 // Router
-const studentRouter = require('./routes/student');
+const studentRouter = require('./routes/student')
+const teacherRouter = require('./routes/teacher')
 
 app.get('/', function (req, res) {
   res.send('Xin chào, đây là API người dùng')
 })
 
-app.use('/api/student', studentRouter);
+app.use('/api/student', studentRouter)
+app.use('/api/teacher', teacherRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {

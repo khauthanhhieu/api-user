@@ -10,8 +10,8 @@ class StudentService {
   }
 
   async getAll() {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const studentCollection = db.collection("students");
       const list = await studentCollection.find().toArray()
       console.log(list)
@@ -31,8 +31,8 @@ class StudentService {
   }
 
   static async findOne(username, password) {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const studentCollection = db.collection("students");
       return await studentCollection.findOne({ username, password })
     } catch (err) {
@@ -44,8 +44,8 @@ class StudentService {
   }
 
   async checkUsername() {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const verify = jwt.verify(this.req.headers['token'], 'doctor')
       const userCollection = db.collection("students");
       const { username } = this.req.body
@@ -73,8 +73,8 @@ class StudentService {
   }
 
   async register() {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const userCollection = db.collection("students")
       const user = this.req.body;
       const result = await userCollection.findOne({ username: user.username })
@@ -100,9 +100,9 @@ class StudentService {
   }
 
   static async findOneById(id) {
-    const db = await MongoClient.connect(url);
     var result = undefined;
     try {
+      const db = await MongoClient.connect(url);
       const userCollection = db.collection("students")
       result = await userCollection.findOne({ _id: new ObjectId(id) })
     } catch (error) {

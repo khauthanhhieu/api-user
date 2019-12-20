@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 const jwt = require('jsonwebtoken');
-const url = 'mongodb://localhost:27071/learing';
+const url = 'mongodb://localhost:27017/learning';
 
 class TeacherService {
   constructor(req, res) {
@@ -9,11 +9,32 @@ class TeacherService {
     this.res = res;
   }
   
-  async checkUsername() {
-    const db = await MongoClient.connect(url);
+  async getAll() {
     try {
+      const db = await MongoClient.connect(url);
+      const teacherCollection = db.collection("teachers");
+      const list = await teacherCollection.find().toArray()
+      console.log(list)
+
+      return this.res.json({
+        isSuccess: true,
+        teachers: list,
+      })
+    } catch (err) {
+      console.log(err)
+      return this.res.status(503).json({
+        isSuccess: false,
+      })
+    } finally {
+      db.close()
+    }
+  }
+
+  async checkUsername() {
+    try {
+      const db = await MongoClient.connect(url);
       const verify = jwt.verify(this.req.headers['token'], 'doctor')
-      const userCollection = db.collection("users");
+      const userCollection = db.collection("teachers");
       const { username } = this.req.body
       console.log(username)
       const currUser = await userCollection.findOne({ _id: ObjectId(verify.user_id) });
@@ -40,8 +61,8 @@ class TeacherService {
   }
 
   async register() {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const userCollection = db.collection("teachers")
       const user = this.req.body;
       const result = await userCollection.findOne({ username: user.username })
@@ -68,28 +89,21 @@ class TeacherService {
 
   static async findOne(username, password) {
     try {
-      return new Promise((resolve, reject) => {
-        MongoClient.connect(url, function (err, db) {
-          if (err)
-            console.log(err)
-          db.collection('users').findOne({ username: username, password: password }, function (err, result) {
-            if (err)
-              console.log(err)
-            resolve(result);
-          })
-        });
-      })
-
-    }
-    catch (error) {
-      return null;
+      const db = await MongoClient.connect(url);
+      const teacherCollection = db.collection("teachers");
+      return await teacherCollection.findOne({ username, password })
+    } catch (err) {
+      console(err)
+      return null
+    } finally {
+      db.close()
     }
   }
 
   static async findOneById(id) {
-    const db = await MongoClient.connect(url);
     var result = undefined;
     try {
+      const db = await MongoClient.connect(url);
       const userCollection = db.collection("users")
       result = await userCollection.findOne({ _id: new ObjectId(id) })
     } catch (error) {
