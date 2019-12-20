@@ -12,10 +12,10 @@ passport.use(new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true,
 }, function (req, username, password, cb) {
-  const role = req.body.role
+  const url = req.originalUrl
   let UserService = undefined
-  if (role == 1) {
-    UserService = TeacherService
+  if (url.includes("teacher")) {
+    UserService = TeacherSerivce
   } else {
     UserService = StudentService
   }

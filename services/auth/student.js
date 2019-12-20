@@ -20,7 +20,7 @@ class AuthStudentService {
         if (err)
           this.res.send(err)
       })
-      const token = jwt.sign({ _id: user._id, role: "1" }, 'doctor', { expiresIn: '2h' });
+      const token = jwt.sign({ _id: user._id, role: "2" }, 'doctor', { expiresIn: '2h' });
       this.res.cookie('access_token', token, {
         maxAge: 2 * 60 * 60 * 100,
       })
