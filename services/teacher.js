@@ -30,8 +30,8 @@ class TeacherService {
   }
 
   async checkUsername() {
+    const db = await MongoClient.connect(url);
     try {
-      const db = await MongoClient.connect(url);
       const verify = jwt.verify(this.req.headers['token'], 'doctor')
       const userCollection = db.collection("teachers");
       const { username } = this.req.body
@@ -60,8 +60,8 @@ class TeacherService {
   }
 
   static async findOne(username, password) {
+    const db = await MongoClient.connect(url);
     try {
-      const db = await MongoClient.connect(url);
       const studentCollection = db.collection("teachers");
       return await studentCollection.findOne({ username, password })
     } catch (err) {
@@ -73,8 +73,8 @@ class TeacherService {
   }
 
   async register() {
+    const db = await MongoClient.connect(url);
     try {
-      const db = await MongoClient.connect(url);
       const userCollection = db.collection("teachers")
       const user = this.req.body;
       const result = await userCollection.findOne({ username: user.username })
@@ -100,8 +100,8 @@ class TeacherService {
   }
 
   static async findOne(username, password) {
+    const db = await MongoClient.connect(url);
     try {
-      const db = await MongoClient.connect(url);
       const teacherCollection = db.collection("teachers");
       return await teacherCollection.findOne({ username, password })
     } catch (err) {

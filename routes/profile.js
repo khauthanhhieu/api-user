@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const ProfileService = require('../services/auth/profile')
+const ProfileService = require('../services/auth/user')
 
 router.get('/', function (req, res) {
   console.log("GET '/profile'")
