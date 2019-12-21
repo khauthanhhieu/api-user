@@ -13,12 +13,7 @@ passport.use(new LocalStrategy({
   passReqToCallback: true,
 }, function (req, username, password, cb) {
   const url = req.originalUrl
-  let UserService = undefined
-  if (url.includes("teacher")) {
-    UserService = TeacherSerivce
-  } else {
-    UserService = StudentService
-  }
+  let UserService = url.includes("teacher") ? TeacherSerivce : StudentService
   return UserService.findOne(username, password)
     .then(user => {
       if (!user) {

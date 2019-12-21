@@ -111,6 +111,7 @@ class StudentService {
     } finally {
       db.close()
     }
+    result.role = "2";
     return result;
   }
 

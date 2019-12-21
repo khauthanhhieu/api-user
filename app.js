@@ -17,6 +17,8 @@ const studentRouter = require('./routes/student')
 const teacherRouter = require('./routes/teacher')
 const addressRouter = require('./routes/address')
 const skillRouter = require('./routes/skill')
+const profileRouter = require('./routes/profile')
+
 
 app.get('/', function (req, res) {
   res.send('Xin chào, đây là API người dùng')
@@ -26,6 +28,7 @@ app.use('/api/student', studentRouter)
 app.use('/api/teacher', teacherRouter)
 app.use('/api/address', addressRouter)
 app.use('/api/skill', skillRouter)
+app.use('/api/profile', profileRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {

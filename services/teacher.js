@@ -10,11 +10,10 @@ class TeacherService {
   }
   
   async getAll() {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const teacherCollection = db.collection("teachers");
       const list = await teacherCollection.find().toArray()
-      console.log(list)
 
       return this.res.json({
         isSuccess: true,
@@ -31,8 +30,8 @@ class TeacherService {
   }
 
   async checkUsername() {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const verify = jwt.verify(this.req.headers['token'], 'doctor')
       const userCollection = db.collection("teachers");
       const { username } = this.req.body
@@ -61,8 +60,8 @@ class TeacherService {
   }
 
   static async findOne(username, password) {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const studentCollection = db.collection("teachers");
       return await studentCollection.findOne({ username, password })
     } catch (err) {
@@ -74,8 +73,8 @@ class TeacherService {
   }
 
   async register() {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const userCollection = db.collection("teachers")
       const user = this.req.body;
       const result = await userCollection.findOne({ username: user.username })
@@ -101,8 +100,8 @@ class TeacherService {
   }
 
   static async findOne(username, password) {
-    const db = await MongoClient.connect(url);
     try {
+      const db = await MongoClient.connect(url);
       const teacherCollection = db.collection("teachers");
       return await teacherCollection.findOne({ username, password })
     } catch (err) {
@@ -117,7 +116,7 @@ class TeacherService {
     const db = await MongoClient.connect(url);
     var result = undefined;
     try {
-      const userCollection = db.collection("users")
+      const userCollection = db.collection("teachers")
       result = await userCollection.findOne({ _id: new ObjectId(id) })
     } catch (error) {
       result = undefined
@@ -125,6 +124,7 @@ class TeacherService {
     } finally {
       db.close()
     }
+    result.role = "1"
     return result;
   }
 
