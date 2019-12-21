@@ -16,6 +16,7 @@ app.use(cookieParser())
 const studentRouter = require('./routes/student')
 const teacherRouter = require('./routes/teacher')
 const addressRouter = require('./routes/address')
+const skillRouter = require('./routes/skill')
 
 app.get('/', function (req, res) {
   res.send('Xin chào, đây là API người dùng')
@@ -24,6 +25,7 @@ app.get('/', function (req, res) {
 app.use('/api/student', studentRouter)
 app.use('/api/teacher', teacherRouter)
 app.use('/api/address', addressRouter)
+app.use('/api/skill', skillRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {

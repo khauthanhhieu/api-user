@@ -4,8 +4,8 @@ const router = express.Router();
 const StudentService = require('../services/student')
 const AuthStudentService = require('../services/auth/student')
 
-router.get("/getall", function(req, res) {
-  console.log("GET '/student/getall'")
+router.get("/", function(req, res) {
+  console.log("GET '/student'")
   let studentServiceObj = new StudentService(req, res)
   studentServiceObj.getAll()
 })
