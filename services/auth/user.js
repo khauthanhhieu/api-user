@@ -33,6 +33,7 @@ class AuthService {
       const verify = jwt.verify(this.req.headers['token'], 'doctor')
       const UserService = (verify.role == 1) ? TeacherService : StudentService
       const user = await UserService.findOneById(verify._id)
+      delete user._id, user.password
       return this.res.json({
         isSuccess: true,
         user: user,
